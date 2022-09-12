@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册界面</title>
+    <style>
+        body{
+            background: url("../../static/images/bj_zhuce.jpg") no-repeat;
+            padding-top: 25px;
+        }
+        .rg_layout{
+            width: 650px;
+            height: 350px;
+            border: 1px solid gray;
+            background-color: white;
+            margin: auto;
+            margin-top: 200px;
+        }
+
+        .td_left{
+            width: 100px;
+            text-align: right;
+            height: 45px;
+        }
+        .td_right{
+            padding-left: 25px ;
+        }
+        #sub{
+            width: 200px;
+            height: 45px;
+            background-color: #FFD026;
+            border: 1px solid #FFD026 ;
+        }
+
+        #username,#password,#email,#name,#repassword{
+            width: 350px;
+            height: 32px;
+            border: 1px solid #A6A6A6 ;
+        }
+        #td_sub{
+            padding-left: 210px;
+        }
+        #cap{
+            font-size: 25px;
+            color: pink;
+            padding-left: 75px;
+        }
+
+    </style>
+    <script src="/static/js/jquery-1.7.2.js"></script>
+    <script>
+        window.onload=function (){
+            document.getElementById("form").onsubmit=function (){
+                return checkUsername() && checkPassword()&&checkEmail();
+            }
+            //分别给用户名和密码框和email绑定离焦事件
+            document.getElementById("username").onchange = checkUsername;
+            document.getElementById("password").onchange = checkPassword;
+            document.getElementById("email").onchange = checkEmail;
+            document.getElementById("repassword").onchange = checkRePassWord;
+        }
+        function checkUsername(){
+            var username =document.getElementById("username").value
+            var reg1=/^\w{6,18}$/
+            var f=reg1.test(username)
+            var hint1=document.getElementById("hint_username")
+            if (f){
+                hint1.innerHTML="<font color='green'>格式正确</font>"
+            }else{
+                hint1.innerHTML="<font color='red'>格式错误</font>"
+            }
+            return f
+        }
+        function checkPassword(){
+            var password1 =document.getElementById("password").value
+            var reg2=/^\w{6,18}$/
+            var f1=reg2.test(password1)
+            var hint2=document.getElementById("hint_password")
+            if (f1){
+                hint2.innerHTML="<font color='green'>格式正确</font>"
+            }else{
+                hint2.innerHTML="<font color='red'>格式错误</font>"
+            }
+            return f1
+        }
+        function checkEmail() {
+            var email =document.getElementById("email").value
+            var reg3=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            var f=reg3.test(email)
+            var hint3=document.getElementById("hint_email")
+            if (f){
+                hint3.innerHTML="<font color='green'>格式正确</font>"
+            }else{
+                hint3.innerHTML="<font color='red'>格式错误</font>"
+            }
+            return f
+        }
+        function checkRePassWord(){
+            var password = document.getElementById("password").value;
+            var repassword = document.getElementById("repassword").value;
+            if(password == repassword) {
+                document.getElementById("hint_repassword").innerHTML="<font color='green'>输入正确</font>";
+
+            }else {
+                document.getElementById("hint_repassword").innerHTML="<font color='red'>密码不一致!</font>";
+            }
+
+        }
+        $(function (){
+            $("#username").change(function (){
+                var username=$(this).val();
+                var param={"username":username};
+                var url="/checkUserNameOK";
+                //发送ajax请求
+                $.post(url,param,function (res){
+                    $("#hint_username").html(res)
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="rg_layout">
+    <form action="/addManager" id="form" method="post">
+        <table>
+            <caption id="cap">注册界面</caption>
+            <tr>
+                <td class="td_left">用户名</td>
+                <td class="td_right">
+                    <input type="text" name="username" id="username" placeholder="请输入用户名（长度为6到18位只允许出现字母和数字）">
+                    <span id="hint_username" class="hint"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="td_left">密码</td>
+                <td class="td_right">
+                    <input type="password" name="password" id="password" placeholder="请输入密码(6到18位只允许出现字母和数字)">
+                    <span id="hint_password" class="hint"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td_left">确认密码</td>
+                <td class="td_right">
+                    <input type="password" name="repassword" id="repassword" placeholder="请再次输入密码">
+                    <span id="hint_repassword" class="hint"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="td_left">Email</td>
+                <td class="td_right">
+                    <input type="email" name="email" id="email" placeholder="请输入邮箱">
+                    <span id="hint_email" class="hint"></span>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class="td_left">姓名</td>
+                <td class="td_right"><input type="text" name="name" id="name" placeholder="请输入姓名"></td>
+            </tr>
+            <tr>
+                <td colspan="2" id="td_sub"><input type="submit" id="sub" value="注册"></td>
+            </tr>
+        </table>
+
+    </form>
+
+
+</div>
+</body>
+</html>
+
+
+

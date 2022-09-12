@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>图书管理</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css" >
+    <style>
+        #head{
+            text-align: center;
+            color: gray;
+            font-size: 50px;
+        }
+        * {
+            box-sizing: border-box;  /*宽度和高度会包括内边距和边框*/
+        }
+
+        div.search {
+            padding: 10px 0;
+        }
+
+        form {
+            position: relative;
+            width: 300px;
+            margin: 0 auto;  /*设置宽度后，居中*/
+        }
+
+        input,button {
+            border: none;   /*无边框样式；元素的总宽度和高度包括边框的宽度 */
+            outline: none;  /*无轮廓样式；轮廓是在元素周围绘制的一条线，在边框之外并且可能与其他内容重叠，以凸显元素，元素的总宽度和高度不受轮廓线宽度的影响。*/
+        }
+
+        .search input {
+            width: 100%;
+            height: 42px;
+            padding-left: 13px;
+            border: 2px solid #c5464a;
+            border-radius: 19px;   /*border-radius 属性用于向元素添加圆角边框：*/
+            background: transparent;  /*背景透明*/
+        }
+
+        .search button {
+            height: 42px;
+            width: 42px;
+            cursor: pointer;  /*cursor属性定义了鼠标指针放在一个元素边界范围内时所用的光标形状*/
+            position: absolute;
+            background: #c5464a;
+            border-radius: 0 19px 19px 0;
+            width: 60px;
+            right: 0;
+        }
+        .search button:hover {
+            background-color: #c7585c;  /*点击搜索按钮时的背景颜色*/
+        }
+
+        /* 在<button>元素后面插入内容，并设置所插入内容的样式： */
+        .search button:before {
+            content: "搜索";  /*插入的内容*/
+            font-size: 13px;  /*插入内容的字体大小*/
+            color: #F9F0DA;  /*插入内容的字体颜色*/
+        }
+    </style>
+    <script src="/static/js/jquery-1.7.2.js"></script>
+    <script>
+        $(function (){
+            $(".DelBook").click(function (){
+                let name = $(this).attr("id")
+                return confirm("你确定删除【"+name+"】这本书吗？")
+            })
+        })
+    </script>
+</head>
+<body>
+
+<div id="header">
+    <img class="logo_img" alt="" src="/static/images/dangdang.png" >
+    <span class="wel_word">图书管理系统</span>
+    <div>
+        <a href="/main">返回商城</a>
+        <a href="/getBooksByPageUser">全部图书</a>
+    </div>
+</div>
+
+<div id="main">
+    <div id="head" >已经搜索到的图书</div>
+    <hr>
+    <body>
+    <div class="search">
+        <form action="/searchBooksUser" method="post">
+            <input placeholder="请输入你要搜索的图书" name="keyword" type="text">
+            <button type="submit"></button>
+        </form>
+    </div>
+
+    </body>
+    <table>
+        {{if .}}
+        <tr>
+            <td>名称</td>
+            <td>价格</td>
+            <td>作者</td>
+            <td>销量</td>
+            <td>库存</td>
+            <td>类型</td>
+        </tr>
+        {{range .}}
+        <tr>
+            <td>{{.Title}}</td>
+            <td>{{.Price}}</td>
+            <td>{{.Author}}</td>
+            <td>{{.Sales}}</td>
+            <td>{{.Stock}}</td>
+            <td>{{.Kind}}</td>
+        </tr>
+        {{end}}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {{else}}
+        <tr>
+           <td><div style="color:red;font-size:15px" >没有这本图书</div></td>
+        </tr>
+        {{end}}
+    </table>
+</div>
+
+<div id="bottom">
+		<span>
+			当当网.Copyright &copy;2015
+		</span>
+</div>
+</body>
+</html>

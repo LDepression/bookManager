@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{background: #EDF9E9}
+        h1{text-indent: 1em;}
+        .p1{font-size: 24px;font-weight: bold;color: red}
+        p{text-indent: 3em;}
+        .p2{font-size: 15px;color: darkgray;}
+        .p3{color: darkgray}
+        blockquote.p3{font-style: italic}
+        .hh1{text-shadow: 0.03em 0.03em 3px gray;color: white;}
+        h3{text-indent: 2em; color:#293A80;text-shadow: 0.1em 0.1em 10px gray;font-weight: 700}
+        h4{text-indent: 1em;}div{text-indent: 1em;}
+        footer{text-align: right;font-size: 19px;color:darkred;}
+    </style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>评论</title>
+<script src="/static/js/jquery-1.7.2.js"></script>
+<script>
+    //文档就绪函数
+    $(function () {
+        //添加评论
+        $("#btn1").click(function () {
+            //判断是否为空
+            if ($("#txtName").val() === "" || $("#txtCom").val() === "") {
+                alert("昵称和评论不能为空！");
+                return true;
+            }
+            // 将输入的 昵称 评论 追加到id为olid中
+            // $("#olid").append("<li>昵称为“" + $("#txtName").val() + "“的用户说了”" + $("#txtCom").val() + "</li>");
+        });
+    });
+</script>
+</head>
+<body>
+<figure>
+    <img src="{{.Book.ImgPath}}" alt="{{.Book.Title}}" height="200px"  align="left"/>
+    <h1>{{.Book.Title}}</h1>
+    <p class="p2">作者：{{.Book.Author}}</p>
+    <p class="p3">{{.Book.Introduction}}</p>
+</figure>
+<h3>留言版信息</h3>
+{{range .Comment}}
+<ul id="olid" style="margin: auto;text-align: center">
+    <li id="tr1">{{.Time}}----------{{.UserName}}:"{{.Text}}"  <a href="/deleteComment?commentID={{.ID}}">删除</a></li>
+</ul>
+{{end}}
+
+<form action="/addComment" method="post">
+    <table style="margin-top: 150px;text-align: center;margin-left: 550px">
+            <tr>
+                <td>昵称：<input id="txtName" type="hidden" name="name" value="{{.UserName}}" /></td>
+            </tr>
+
+        <tr>
+            <td> 评论：<input type="text" name="text"></td>
+        </tr>
+        <tr >
+            <td><input type="hidden" name="BookID" value="{{.Book.ID}}"></td>
+        </tr>
+        <tr>
+            <td><input id="btn1" type="submit" name="name" value="评论" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

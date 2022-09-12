@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>后台管理</title>
+<link type="text/css" rel="stylesheet" href="/static/css/style.css" >
+<style type="text/css">
+	h1 {
+		text-align: center;
+		margin-top: 200px;
+	}
+	#abc{
+		height: 20px;
+		width: 1200px;
+		text-align: center;
+		font-size: 25px;
+		color: #ff2d17;
+	}
+	#aaa{
+		height: 5px;
+		width: 1200px;
+	}
+</style>
+</head>
+<body>
+
+	<div id="header">
+			<img class="logo_img" alt="" src="/static/img/dangdang.png" >
+			<span class="wel_word">后台管理系统</span>
+
+			<div>
+				{{if .}}
+				<a href="/getBooksByPage">图书管理</a>
+				<a href="/main">返回首页</a>
+				<a href="/pages/manager/regist.html">添加管理人员</a>
+			</div>
+	</div>
+	
+	<div id="main">
+		<h1>欢迎管理员进入后台管理系统</h1>
+	</div>
+	{{else}}
+	<div id="abc">
+		对不起，你没有管理图书的权限
+		<br>
+		<a  href="/main" id="aaa">返回</a>
+	</div>
+
+	{{end}}
+	<div id="bottom">
+		<span>
+			当当网@2004-2017
+		</span>
+	</div>
+</body>
+</html>

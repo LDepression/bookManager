@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>图书管理</title>
+<link type="text/css" rel="stylesheet" href="/static/css/style.css" >
+	<!-- Bootstrap Core CSS -->
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom CSS -->
+	<link href="/static/css/heroic-features.css" rel="stylesheet">
+	<style>
+		#head{
+			text-align: center;
+			color: gray;
+			font-size: 50px;
+		}
+		 * {
+			 box-sizing: border-box;  /*宽度和高度会包括内边距和边框*/
+		 }
+
+		div.search {
+			padding: 10px 0;
+		}
+
+		form {
+			position: relative;
+			width: 300px;
+			margin: 0 auto;  /*设置宽度后，居中*/
+		}
+
+		input,button {
+			border: none;   /*无边框样式；元素的总宽度和高度包括边框的宽度 */
+			outline: none;  /*无轮廓样式；轮廓是在元素周围绘制的一条线，在边框之外并且可能与其他内容重叠，以凸显元素，元素的总宽度和高度不受轮廓线宽度的影响。*/
+		}
+
+		.search input {
+			width: 100%;
+			height: 42px;
+			padding-left: 13px;
+			border: 2px solid #c5464a;
+			border-radius: 19px;   /*border-radius 属性用于向元素添加圆角边框：*/
+			background: transparent;  /*背景透明*/
+		}
+
+		.search button {
+			height: 42px;
+			cursor: pointer;  /*cursor属性定义了鼠标指针放在一个元素边界范围内时所用的光标形状*/
+			position: absolute;
+			background: #c5464a;
+			border-radius: 0 19px 19px 0;
+			width: 60px;
+			right: 0;
+		}
+		.search button:hover {
+			background-color: #c7585c;  /*点击搜索按钮时的背景颜色*/
+		}
+
+		/* 在<button>元素后面插入内容，并设置所插入内容的样式： */
+		.search button:before {
+			content: "搜索";  /*插入的内容*/
+			font-size: 13px;  /*插入内容的字体大小*/
+			color: #F9F0DA;  /*插入内容的字体颜色*/
+		}
+		/*#table_center{*/
+		/*	text-align: center;*/
+		/*	margin: auto;*/
+		/*}*/
+		.navbar .nav > li > a:hover {
+			color: white;
+			background-color: #ED7A54;
+		}
+
+		/*新书上架*/
+		.rob {
+			color: #c30;
+			/*float: left;*/
+			overflow: hidden;
+			font-weight: bold;
+			margin-right: 12px;
+		}
+
+		.price_r {
+			color: #aaa;
+			text-decoration: line-through;
+			/*float: left;*/
+			overflow: hidden;
+			margin-left: 2px;
+		}
+
+		/*登录和注册*/
+		.pull-right {
+			float: right !important;
+			line-height: 50px;
+		}
+
+		.login {
+
+		}
+
+		.reg {
+			margin-left: 10px;
+		}
+	</style>
+	<script src="/static/js/jquery-1.7.2.js"></script>
+	<script>
+		$(function (){
+			$(".DelBook").click(function (){
+				let name = $(this).attr("id")
+				return confirm("你确定删除【"+name+"】这本书吗？")
+			})
+		})
+	</script>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/main" style="color: #ff2c47">首页</a>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="#">图书排行榜</a>
+				</li>
+				<li>
+					<a href="/bookKind?kind=subject">学科</a>
+				</li>
+				<li>
+					<a href="/bookKind?kind=person">人文</a>
+				</li>
+				<li>
+					<a href="/bookKind?kind=biography">传记</a>
+				</li>
+				<li>
+					<a href="/bookKind?kind=unique">奇异</a>
+				</li>
+				<li>
+					<a href="/bookKind?kind=poem">诗集</a>
+				</li>
+				<li>
+					<a href="/bookKind?kind=success">成功励志</a>
+				</li>
+				<li>
+					<a href="/bookKind?kind=manager">管理</a>
+				</li>
+				<li>
+					<a href="/bookKind?kind=history">历史</a>
+				</li>
+				<li>
+					<a href="#">电子书</a>
+				</li>
+				<li>
+					<a href="#">网络文学</a>
+				</li>
+			</ul>
+
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container -->
+</nav>
+	<div id="header">
+<!--			<img class="logo_img" alt="" src="/static/images/dangdang.png" >-->
+<!--			<span class="wel_word">图书管理系统</span>-->
+<!--			<div>-->
+<!--				<a href="/main">返回商城</a>-->
+
+<!--			</div>-->
+	</div>
+	
+	<div id="main">
+		<div id="head" >全部图书</div>
+		<hr>
+
+		<div class="search">
+			<form action="/searchBooksUser" method="post">
+				<input placeholder="请输入你要搜索的图书" name="keyword" type="text">
+				<button type="submit"></button>
+			</form>
+		</div>
+
+
+		<table id="table_center" >
+			<tr>
+				<td>名称</td>
+				<td>价格</td>
+				<td>作者</td>
+				<td>销量</td>
+				<td>库存</td>
+				<td>类型</td>
+				<td>更多操作</td>
+			</tr>
+			{{range .Books}}
+			<tr>
+				<td>{{.Title}}</td>
+				<td>{{.Price}}</td>
+				<td>{{.Author}}</td>
+				<td>{{.Sales}}</td>
+				<td>{{.Stock}}</td>
+				<td>{{.Kind}}</td>
+				<td><a href="/findDetail?bookID={{.ID}}">查看详情</a></td>
+				<td><a href="/getAllComment?bookID={{.ID}}">点击我评论</a></td>
+				<td><a href="/download?title={{.Title}}">下载</a></td>
+			</tr>
+			{{end}}
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>	
+		</table>
+	</div>
+	<div id="page_nav">
+		{{if .IsHasPrev}}
+		<a href="/getBooksByPageUser">首页</a>
+		<a href="/getBooksByPageUser?PageNo={{.ToPrevPageNo}}">上一页</a>
+		{{end}}
+		当前是第{{.PageNo}}页，共有{{.TotalPageSize}}页，共{{.TotalRecord}}条记录
+		{{if .IsHasNext}}
+		<a href="/getBooksByPageUser?PageNo={{.ToNextPageNo}}">下一页</a>
+		<a href="/getBooksByPageUser?PageNo={{.TotalPageSize}}">末页</a>
+		{{end}}
+	     到第<input value="{{.PageNo}}" name="pn" id="pn_input"/>页
+		  <input type="button" value="确定" id="sub" style="color: #FFD026">
+		<script>
+			$("#sub").click(function (){
+				let PageNo = $("#pn_input").val()
+				window.location.href="/getBooksByPageUser?PageNo="+PageNo
+			})
+		</script>
+	</div>
+	<div id="bottom">
+		<span>
+			当当网.Copyright &copy;2015
+		</span>
+	</div>
+</body>
+</html>

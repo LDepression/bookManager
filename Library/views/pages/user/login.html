@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>登陆页面</title>
+		<link rel="stylesheet" href="../../static/css/login.css" />
+		<link rel="stylesheet" href="../../static/css/iconfont.css" />
+		<script src="/static/js/jquery-1.7.2.js"></script>
+		<script>
+			$(function (){
+				$("#sub_btn").click(function (){
+					let username=$("#username").val()
+					if (username===""){
+						alert("账号不能为空")
+						return false
+					}
+					let pwd=$("#password").val()
+					if (pwd===""){
+						alert("密码不能为空")
+						return false
+					}
+				})
+				if ("{{.}}"==="账号或密码有误"){
+					$("#msgError").html("<font style='color:red'>{{.}}</font>");
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<div id="maxbox">
+			<h1>欢迎来到登录界面</h1>
+			<div class="inputbox">
+				<form  action="/login" method="post" >
+					<div class="inputText">
+						<span class="iconfont icon-mine"></span>
+						<input type="text" placeholder="请输入账号" name="username"/>
+					</div>
+					<div class="inputText">
+						<span class="iconfont icon-lock"></span>
+						<input type="password" placeholder="请输入密码" name="password"/>
+					</div>
+					<input  class="inputButton" type="submit" value="登录" id="sub_btn" />
+					<div>
+						<span id="msgError"></span>
+					</div>
+					<div id="sign_up">
+						没有密码？ <a href="/pages/user/regist.html">注册</a>
+					</div>
+				</form>
+			</div>
+			
+			
+		</div>
+		
+	</body>
+</html>
